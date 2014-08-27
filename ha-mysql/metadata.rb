@@ -6,3 +6,4 @@ description      'Installs/Configures ha-mysql'
 long_description 'Installs/Configures ha-mysql'
 version          '0.1.0'
 
+depends 'mysql', '~> 5.4.3'
