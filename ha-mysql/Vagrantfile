@@ -19,7 +19,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         mysql: {
           server_root_password: 'rootpass',
           server_debian_password: 'debpass',
-          server_repl_password: 'replpass'
+          server_repl_password: 'replpass',
+          allow_remote_root: true
         }
       }
       
@@ -41,7 +42,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         mysql: {
           server_root_password: 'rootpass',
           server_debian_password: 'debpass',
-          server_repl_password: 'replpass'
+          server_repl_password: 'replpass',
+          allow_remote_roote: true
         }
       }
       
@@ -51,5 +53,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ]
     end
   end
+
+  config.vm.define "client1" do |client1|
+    client1.vm.hostname = "ha-mysql-client1"
+    client1.omnibus.chef_version = :latest
+    client1.vm.box = "chef/ubuntu-14.04"
+    client1.vm.network :private_network, type: "dhcp"
+    client1.berkshelf.enabled = true
+    client1.vm.provision :chef_solo do |chef|
+      chef.run_list = [
+        "recipe[ha-mysql::default]",
+        "recipe[mysql::client]"
+      ]
+    end
+  end
+
 end
 
