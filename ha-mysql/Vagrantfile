@@ -1,7 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.require_version ">= 1.5.0"
@@ -9,10 +8,10 @@ Vagrant.require_version ">= 1.5.0"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define "db1" do |db1|
-    db1.vm.hostname = "ha-mysql-berkshelf1"
+    db1.vm.hostname = "db1"
     db1.omnibus.chef_version = :latest
     db1.vm.box = "chef/ubuntu-14.04"
-    db1.vm.network :private_network, type: "dhcp"
+    db1.vm.network :private_network, ip: "192.168.255.1"
     db1.berkshelf.enabled = true
     db1.vm.provision :chef_solo do |chef|
       chef.json = {
@@ -32,10 +31,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define "db2" do |db2|
-    db2.vm.hostname = "ha-mysql-berkshelf2"
+    db2.vm.hostname = "db2"
     db2.omnibus.chef_version = :latest
     db2.vm.box = "chef/ubuntu-14.04"
-    db2.vm.network :private_network, type: "dhcp"
+    db2.vm.network :private_network, ip: "192.168.255.2"
     db2.berkshelf.enabled = true
     db2.vm.provision :chef_solo do |chef|
       chef.json = {
@@ -55,10 +54,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define "client1" do |client1|
-    client1.vm.hostname = "ha-mysql-client1"
+    client1.vm.hostname = "client1"
     client1.omnibus.chef_version = :latest
     client1.vm.box = "chef/ubuntu-14.04"
-    client1.vm.network :private_network, type: "dhcp"
+    client1.vm.network :private_network, ip: "192.168.255.3"
     client1.berkshelf.enabled = true
     client1.vm.provision :chef_solo do |chef|
       chef.run_list = [
@@ -67,6 +66,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ]
     end
   end
-
 end
 
