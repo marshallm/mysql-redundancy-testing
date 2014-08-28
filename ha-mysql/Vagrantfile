@@ -61,7 +61,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     client1.berkshelf.enabled = true
     client1.vm.provision :chef_solo do |chef|
       chef.run_list = [
-        "recipe[ha-mysql::default]",
         "recipe[mysql::client]"
       ]
     end
