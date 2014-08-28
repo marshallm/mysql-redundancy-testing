@@ -12,7 +12,7 @@ Prerequisites:
 - Download [vagrant](http://www.vagrantup.com/downloads.html) 1.6.3 and install
 - Downlad [chef-dk](http://downloads.getchef.com/chef-dk/) 0.2.0 and install
   - This includes Berkshelf and foodcritic and a bunch of other crap
-- Install chef gem ~gem install chef~
+- Install chef gem `gem install chef`
 
 The do these bash commands:
 
