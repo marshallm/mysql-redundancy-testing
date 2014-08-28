@@ -39,7 +39,7 @@ totem {
  	interface {
 		# The following values need to be set based on your environment 
 		ringnumber: 0
-		bindnetaddr: <%= @node['corosync_bind'] %>
+		bindnetaddr: <%= @node['ha-mysql']['corosync_bind'] %>
 		mcastaddr: 226.94.1.1
 		mcastport: 5405
 	}

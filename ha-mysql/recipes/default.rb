@@ -41,3 +41,19 @@ end
 service "pacemaker" do
   action [ :start, :enable ]
 end
+
+# Configure cluster for shared IP
+
+template "/etc/corosync/crm-resource-configuration.res" do
+  source "crm-resource-configuration.res.erb"
+  owner "root"
+  group "root"
+  mode "0644"
+end
+
+execute "configure-cluster" do
+  not_if "/usr/sbin/crm status | grep -q 'shared_ip'"
+  command "/usr/sbin/crm configure < /etc/corosync/crm-resource-configuration.res"
+  action :run
+end
+

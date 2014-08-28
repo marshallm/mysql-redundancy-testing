@@ -1,0 +1,4 @@
+primitive shared_ip ocf:heartbeat:IPaddr2 params ip="<%= @node['ha-mysql']['shared_ip'] %>" cidr_netmask="24" nic="eth1"
+property stonith-enabled=false
+property no-quorum-policy=ignore
+rsc_defaults resource-stickiness=100
