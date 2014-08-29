@@ -1,0 +1,8 @@
+#!/bin/bash
+
+PCS=/usr/sbin/pcs
+
+$PCS resource create ClusterIP ocf:heartbeat:IPaddr2 ip=<%= @node['ha-mysql']['shared_ip'] %> cidr_netmask=24
+$PCS property set stonith-enabled=false
+$PCS property set no-quorum-policy=ignore
+$PCS resource defaults resource-stickiness=100
