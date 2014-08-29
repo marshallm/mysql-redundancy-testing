@@ -89,7 +89,7 @@ In another window in the same directory:
     Connection to 127.0.0.1 closed.
 
 
-And you see there are two nodes online and they have a shared_ip running on db1.
+And you see there are two nodes online and they have a shared_ip running on db1.  Using CentOS you need to use the command: `vagrant ssh -c 'sudo /usr/sbin/pcs status' db1` to learn the state of the cluster.  As `crm` is not supported on RedHat and it's variants.
 
 
     $ vagrant halt db1
