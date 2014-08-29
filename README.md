@@ -23,7 +23,18 @@ The do these bash commands:
     bundle install
     # Deal with a problem with virtual box
     VBoxManage dhcpserver remove --netname HostInterfaceNetworking-vboxnet0
-    vagrant up
+
+Now you're ready to get the machines running.  At this point you can boot into ubuntu 14.04 and see it working which is corosync/pacemaker using the corosync pacemaker plugin.  Which aparently is not the way RedHat is doing it anymore.  They're using cman to manage the configuration.
+
+But for testing I wanted to validate it on CentOS 6.3.  I have that working two in this recipe and Vagrantfile.  To do CentOS you set the environment variable HA_CENTOS=true and then run vagrant up.
+
+so:
+
+    vagrant up # for ubuntu 14.04
+
+or:
+
+    HA_CENTOS=true vagrant up # for centos 6.3
     
     
 After all the stuff gets setup and you'll have 3 machines running and you can work them out by running these commands and see this result.
