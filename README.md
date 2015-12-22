@@ -7,19 +7,22 @@ On a properly setup workstation you can boot up 3 servers and play with MySQL
 
 Prerequisites:
 
-- Install [VirtualBox](https://www.virtualbox.org) 4.3.14
-- Install and use [RVM](http://rvm.io) to get ruby 2.1.2 installed and setup
-- Download [vagrant](http://www.vagrantup.com/downloads.html) 1.6.3 and install
-- Downlad [chef-dk](http://downloads.getchef.com/chef-dk/) 0.2.0 and install
+- Install [VirtualBox](https://www.virtualbox.org) latest version
+- Install and use [RVM](http://rvm.io) to get ruby (latest version) installed and setup
+- Download [vagrant](http://www.vagrantup.com/downloads.html) latest version and install
+- Downlad [chef-dk](http://downloads.getchef.com/chef-dk/) latest version and install
   - This includes Berkshelf and foodcritic and a bunch of other crap
 - Install chef gem `gem install chef`
 
 The do these bash commands:
 
-    vagrant plugin install vagrant-berkshelf --plugin-version 2.0.1
+    vagrant plugin install vagrant-berkshelf
     vagrant plugin install vagrant-omnibus
     git clone git@github.com:mclazarus/mysql-redundancy-testing.git
+    # Alternate command: If ssh is not setup with github use this instead- 
+    #      git clone https://github.com/mclazarus/mysql-redundancy-testing.git
     cd mysql-redundancy-testing/ha-mysql
+    # Install Bundler if not installed:  gem install bundler
     bundle install
     # Deal with a problem with virtual box
     VBoxManage dhcpserver remove --netname HostInterfaceNetworking-vboxnet0
@@ -35,7 +38,8 @@ so:
 or:
 
     HA_CENTOS=true vagrant up # for centos 6.3
-    
+  
+  # If you encounter errors running vagrant installing chef.  For example, installing corosync when running package corosync in the ha-mysql:default recipe.  Run - vagrant ssh <example db1>, once on the machine run sudo apt-get update , exit.  Rerun on bash as vagrant provision <example db1>.  This should have cleaned up everything on db1 (for example) and you should successfully setup everything for that machine.
     
 After all the stuff gets setup and you'll have 3 machines running and you can work them out by running these commands and see this result.
 
@@ -112,5 +116,5 @@ And you see there are two nodes online and they have a shared_ip running on db1.
 
 Now you can see that there is one node online one offline and the shared_ip is on db2.
 
-If you switch back to your `client1` window you'll and issue a database command you'll see that your connection went away, but the mysql-client successfully reconnects and can issue the command as the IP has failed over.
+If you switch back to your `client1` window and issue a database command (show databases) you'll see that your connection went away, but the mysql-client successfully reconnects and can issue the command as the IP has failed over.
 
